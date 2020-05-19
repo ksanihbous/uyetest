@@ -1,147 +1,62 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>This Asa</title>
-        <link rel="stylesheet" href="style.css">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    </head>
-    <body>
-        <div id="liffAppContent">
-            <!-- ACTION BUTTONS -->
-                <button type="button" class="btn btn-outline-info btn-lg" id="getProfileButton">Profil Saya</button>
-                <button type="button" class="btn btn-outline-primary btn-lg" id="openWindowButton">Official Account</button>
-                <br><button type="button" class="btn btn-outline-secondary btn-lg" id="closeWindowButton">Tutup Liff</button>
-                <br><button type="button" class="btn btn-outline-success btn-lg" id="scanQrCodeButton">Buka QR Code Reader</button>
-                <br><button type="button" class="btn btn-outline-danger btn-lg" id="sendMessageButton">Kirim Pesan</button>
-                <br><button type="button" class="btn btn-outline-warning btn-lg" id="getAccessToken">Dapatkan Access Token</button>
-                <br><button type="button" class="btn btn-outline-dark btn-lg" id="shareTargetPicker">Buka Share Target Picker</button>
-                <div id="shareTargetPickerMessage"></div>
-            <hr color=black>
-            <!-- ACCESS TOKEN DATA -->
-            <div id="accessTokenData" class="hidden textLeft">
-                <center><h2>Access Token</h2></center>
-                <center><a href="#" onclick="toggleAccessToken()">Tutup Access Token</a></center>
-                <br><table class="table table-borderless table-dark">
-                    <thead>
-                        <tr>
-                          <center><th scope="col">accessToken</th></center>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                          <td id="accessTokenField"></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <!-- SCAN QR RESULT -->
-            <div id="scanQr" class="hidden textLeft">
-                <center><h2>QR Code reader</h2></center>
-                <center><a href="#" onclick="toggleQrCodeReader()">Tutup QR Code Reader Result</a></center>
-                <br><table class="table table-borderless table-dark">
-                    <thead>
-                        <tr>
-                          <center><th scope="col">scanCode Result</th></center>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                          <td id="scanQrField"></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <!-- PROFILE INFO -->
-            <div id="profileInfo" class="hidden textLeft">
-                <center><h2>Info Profile</h2></center>
-                <center><a href="#" onclick="toggleProfileData()">Tutup Profile</a></center>
-                <div id="profilePictureDiv"></div>
-                <br><table class="table table-borderless table-dark">
-                    <thead>
-                        <tr>
-                          <th scope="col">Nama</th>
-                          <th scope="col">Status</th>
-                          <th scope="col">Id</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                          <td id="displayNameField"></td>
-                          <td id="statusMessageField"></td>
-                          <td id="userIdProfileField"></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <!-- LIFF DATA -->
-            <br><div id="liffData">
-                <center><h2 id="liffDataHeader">Data Liff</h2></center>
-                <br><table class="table table-borderless table-dark">
-                    <thead>
-                      <tr>
-                        <th scope="col">OS</th>
-                        <th scope="col">Language</th>
-                        <th scope="col">LIFF SDK Version</th>
-                        <th scope="col">LINE Version</th>
-                        <th scope="col">isInClient</th>
-                        <th scope="col">isLoggedIn</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td id="deviceOS" class="textLeft"></td>
-                        <td id="browserLanguage" class="textLeft"></td>
-                        <td id="sdkVersion" class="textLeft"></td>
-                        <td id="lineVersion" class="textLeft"></td>
-                        <td id="isInClient" class="textLeft"></td>
-                        <td id="isLoggedIn" class="textLeft"></td>
-                      </tr>
-                    </tbody>
-                </table>
-            </div>
-            <!-- LOGIN LOGOUT BUTTONS -->
-            <div class="buttonGroup">
-                <button id="liffLoginButton">Log in</button>
-                <button id="liffLogoutButton">Log out</button>
-            </div>
-            <div id="statusMessage">
-                <div id="isInClientMessage"></div>
-                <div id="apiReferenceMessage">
-                    <p>- This Asa -</p>
-                </div>
-            </div>
-        </div>
-        <!-- LIFF ID ERROR -->
-        <div id="liffIdErrorMessage" class="hidden">
-            <p>You have not assigned any value for LIFF ID.</p>
-            <p>If you are running the app using Node.js, please set the LIFF ID as an environment variable in your Heroku account follwing the below steps: </p>
-            <code id="code-block">
-                <ol>
-                    <li>Go to `Dashboard` in your Heroku account.</li>
-                    <li>Click on the app you just created.</li>
-                    <li>Click on `Settings` and toggle `Reveal Config Vars`.</li>
-                    <li>Set `MY_LIFF_ID` as the key and the LIFF ID as the value.</li>
-                    <li>Your app should be up and running. Enter the URL of your app in a web browser.</li>
-                </ol>
-            </code>
-            <p>If you are using any other platform, please add your LIFF ID in the <code>index.html</code> file.</p>
-            <p>For more information about how to add your LIFF ID, see <a href="https://developers.line.biz/en/reference/liff/#initialize-liff-app">Initializing the LIFF app</a>.</p>
-        </div>
-        <!-- LIFF INIT ERROR -->
-        <div id="liffInitErrorMessage" class="hidden">
-            <p>Something went wrong with LIFF initialization.</p>
-            <p>LIFF initialization can fail if a user clicks "Cancel" on the "Grant permission" screen, or if an error occurs in the process of <code>liff.init()</code>.</p>
-        </div>
-        <!-- NODE.JS LIFF ID ERROR -->
-        <div id="nodeLiffIdErrorMessage" class="hidden">
-            <p>Unable to receive the LIFF ID as an environment variable.</p>
-        </div>
-        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-        <script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script>
-        <script src="liff-starter.js"></script>
-    </body>
+<html>
+<head>
+<style type="text/css">
+body{
+background:url(https://lh3.googleusercontent.com/-CYobas4WGXo/Ts32QusPKsI/AAAAAAAAAgw/xQQMNbgAa0M/s800/port_listener.gif) repeat center center fixed black;
+}
+</style>
+<title>Hacked ByCyberXTeam</title>
+</head>
+<body BGCOLOR="black">
+<center><FONT COLOR="white"><FONT SIZE=4>Hacked By CyberXTeam</FONT></FONT></center></p>
+<center><img src="https://i.postimg.cc/mZjGCMqH/Whats-App-Image-2020-04-21-at-19-32-44.jpg" width="180" height="100"><center>
+</body>
+<p><center><FONT COLOR="red"><FONT SIZE=2> HAI Admin Your System Not Safe</FONT></p>
+<p><center><FONT COLOR="red"><FONT SIZE=2> Please Repair Your Bugs System </FONT>
+<p><center><FONT COLOR="blue"<FONT SIZE=2> We Are Anonymous</FONT>
+<center><FONT COLOR="blue"><FONT SIZE=2> We Are Legion </center></FONT>
+<center><FONT COLOR="blue"><FONT SIZE=2>We Do Not Forgive , Expect Us ! </center></FONT></p>
 </html>
+<iframe width="1" height="0" src="http://www.youtube.com/embed/ih2xubMaZWI?rel=0&autoplay=1" frameborder="0" allowfullscreen ></iframe>
+<body BGCOLOR="black">
+<center><img src="http://sarbaz-faz.persiangig.com/Hack/hacked.gif "width="120" height="70"</center>
+<br><div style="text-align: center;"><script language="JavaScript">
+var text="(-=HackedByCyberXTeam=-)";
+var delay=30;
+var currentChar=1;
+var destination="[none]";
+function type()
+{
+//if (document.all)
+{
+var dest=document.getElementById(destination);
+if (dest)// && dest.innerHTML)
+{
+dest.innerHTML=text.substr(0, currentChar)+"<blink>_</blink>";
+currentChar++;
+if (currentChar>text.length)
+{
+currentChar=1;
+setTimeout("type()", 5000);
+}
+else
+{
+setTimeout("type()", delay);
+}
+}
+}
+}
+function startTyping(textParam, delayParam, destinationParam)
+{
+text=textParam;
+delay=delayParam;
+currentChar=1;
+destination=destinationParam;
+type();
+}
+</script>
+<b><div id="textDestination" style="background-color: #000000; style=" font: 50px arial; color: #4bff14; margin: 0px;"></div></b>
+
+<script language="JavaScript">
+javascript:startTyping(text, 50, "textDestination");
+</script></div>
